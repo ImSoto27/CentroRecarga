@@ -7,7 +7,7 @@ namespace DATOS
 {
     public class ConexionSql
     {
-        private SqlConnection conexion = new SqlConnection("Server=.;Database=CENTRORECARGA;Integrated Security=True");
+        private SqlConnection conexion = new SqlConnection("Server=.;Database=CENTRORECARGA;TrustServerCertificate=True;Integrated Security=True");
 
 
         public SqlConnection AbrirConexion()
