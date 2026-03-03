@@ -1,5 +1,19 @@
 <Solution>
-  <Project Path="DATOS/DATOS.csproj" Id="a8afa949-819d-46ee-97ea-2015a1fcd7c5" />
-  <Project Path="NEGOCIO/NEGOCIO.csproj" Id="eddb3784-b068-4566-aad8-258f49509a40" />
-  <Project Path="WinFormsApp1/PRESENTACION.csproj" />
+  <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="Default" />
+    <BuildType Name="Release" />
+  </Configurations>
+  <Project Path="../../../../../source/repos/CentroRecarga/DATOS/DATOS.csproj" Id="a8afa949-819d-46ee-97ea-2015a1fcd7c5">
+    <BuildType Solution="Default|*" Project="Release" />
+    <Build Solution="Default|*" Project="false" />
+  </Project>
+  <Project Path="../../../../../source/repos/CentroRecarga/NEGOCIO/NEGOCIO.csproj" Id="eddb3784-b068-4566-aad8-258f49509a40">
+    <BuildType Solution="Default|*" Project="Release" />
+    <Build Solution="Default|*" Project="false" />
+  </Project>
+  <Project Path="../../../../../source/repos/CentroRecarga/WinFormsApp1/PRESENTACION.csproj">
+    <BuildType Solution="Default|*" Project="Release" />
+    <Build Solution="Default|*" Project="false" />
+  </Project>
 </Solution>
