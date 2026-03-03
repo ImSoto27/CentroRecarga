@@ -47,7 +47,7 @@ namespace PRESENTACION
                 ;
                 recarga.AgregarRecarga(vendedorID, operadoraID, monto);
 
-                MessageBox.Show("Recarga guardada correctamente");
+                MessageBox.Show("Recarga aplicada correctamente!");
 
                 principal.Show();
                 this.Close();

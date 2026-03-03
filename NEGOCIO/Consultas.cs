@@ -59,5 +59,10 @@ namespace NEGOCIO
             tabla = consulta.Mostrar();
             return tabla;
         }
+
+        public void AgregarCierres(int vendedorID)
+        {
+            consulta.AgregarCierre(vendedorID);
+        }
     }
 }

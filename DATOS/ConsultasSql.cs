@@ -9,18 +9,22 @@ using System.Data;
 
 namespace DATOS
 {
+
+
     public class CD_Recarga
     {
-        private ConexionSql conexion = new ConexionSql();
 
+        private ConexionSql conexion = new ConexionSql();
         SqlDataReader leer;
         DataTable tabla = new DataTable();
         SqlCommand comando = new SqlCommand();
 
         public DataTable Mostrar()
         {
+                    
+
             comando.Connection = conexion.AbrirConexion();
-            comando.CommandText = "SELECT r.RecargaID, v.Nombre AS Vendedor, o.NombreOperadora AS Operadora, r.Monto FROM Recarga r INNER JOIN Vendedor v ON r.VendedorID = v.VendedorID INNER JOIN Operadora o ON r.OperadoraID = o.OperadoraID ORDER BY r.RecargaID";
+            comando.CommandText = "SELECT r.RecargaID, v.Nombre AS Vendedor, o.NombreOperadora AS Operadora, r.Monto, r.FechaRecarga AS Fecha FROM Recarga r INNER JOIN Vendedor v ON r.VendedorID = v.VendedorID INNER JOIN Operadora o ON r.OperadoraID = o.OperadoraID ORDER BY r.RecargaID";
             SqlDataReader leer = comando.ExecuteReader();
             tabla.Load(leer);
 
@@ -32,7 +36,7 @@ namespace DATOS
         public void InsertarRecarga(int vendedorID, int operadoraID, decimal monto)
         {
             comando.Connection = conexion.AbrirConexion();
-            comando.CommandText = "INSERT INTO Recarga VALUES ('"+vendedorID+"', '"+operadoraID+"', '"+monto+"')";
+            comando.CommandText = "INSERT INTO Recarga(VendedorID, OperadoraID, Monto) VALUES ('" + vendedorID+"', '"+operadoraID+"', '"+monto+"')";
             comando.ExecuteNonQuery();
 
         }
@@ -40,7 +44,6 @@ namespace DATOS
     public class CD_ConsultaOperadora
     {
         private ConexionSql conexion = new ConexionSql();
-
         SqlDataReader leer;
         DataTable tabla = new DataTable();
         SqlCommand comando = new SqlCommand();
@@ -74,7 +77,6 @@ namespace DATOS
     public class CD_ConsultaVendedor
     {
         private ConexionSql conexion = new ConexionSql();
-
         SqlDataReader leer;
         DataTable tabla = new DataTable();
         SqlCommand comando = new SqlCommand();
@@ -116,13 +118,22 @@ namespace DATOS
         public DataTable Mostrar()
         {
             comando.Connection = conexion.AbrirConexion();
-            comando.CommandText = "SELECT r.RecargaID, v.Nombre AS Vendedor, o.NombreOperadora AS Operadora, r.Monto FROM CierreCaja r INNER JOIN Vendedor v ON r.VendedorID = v.VendedorID INNER JOIN Operadora o ON r.OperadoraID = o.OperadoraID ORDER BY r.RecargaID";
+            comando.CommandText = "SELECT r.RecargaID, v.Nombre AS Vendedor, o.NombreOperadora AS Operadora, r.Monto FROM CierreCaja r INNER JOIN Vendedor v ON r.VendedorID = v.VendedorID INNER JOIN Operadora o ON r.OperadoraID = o.OperadoraID ORDER BY v.VendedorID";
             SqlDataReader leer = comando.ExecuteReader();
             tabla.Load(leer);
 
             conexion.CerrarConexion();
 
             return tabla;
+        }
+
+        public void AgregarCierre(int vendedorID)
+        {
+            comando.Connection = conexion.AbrirConexion();
+            comando.CommandText = "INSERT INTO CierreCaja(VendedorID, OperadoraID, RecargaID, Monto) SELECT VendedorID, OperaoraID, RecargaID, Monto FROM Recarga WHERE VendedorID = '" + vendedorID + "' ";
+            comando.ExecuteNonQuery();
+
+            conexion.CerrarConexion();
         }
     }
 }
