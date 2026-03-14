@@ -60,7 +60,9 @@ namespace PRESENTACION
 
         private void button6_Click(object sender, EventArgs e)
         {
-
+            Cierres frm = new Cierres(this);
+            frm.Show();
+            this.Hide();
         }
     }
 }

@@ -42,10 +42,9 @@ namespace PRESENTACION
             {
                 int vendedorID = Convert.ToInt32(comboBox1.SelectedValue);
                 int operadoraID = Convert.ToInt32(comboBox2.SelectedValue);
+                string Numero = maskedTextBox1.Text;
                 int monto = (int)Convert.ToDecimal(textBox1.Text);
-
-                ;
-                recarga.AgregarRecarga(vendedorID, operadoraID, monto);
+                recarga.AgregarRecarga(vendedorID, operadoraID, Numero, monto);
 
                 MessageBox.Show("Recarga aplicada correctamente!");
 
@@ -60,7 +59,12 @@ namespace PRESENTACION
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            maskedTextBox1.Mask = "000-000-0000";
+        }
 
+        private void maskedTextBox1_MouseClick(object sender, MouseEventArgs e)
+        {
+            maskedTextBox1.SelectionStart = 0;
         }
 
         private void AgregarRecarga_Load(object sender, EventArgs e)
@@ -78,6 +82,16 @@ namespace PRESENTACION
         {
             principal.Show();
             this.Close();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void maskedTextBox1_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+
         }
     }
 }
