@@ -30,10 +30,6 @@ namespace PRESENTACION
 
         private void VerCierres_Load(object sender, EventArgs e)
         {
-            comboBox1.DataSource = cierres.MostrarCierre();
-            comboBox1.DisplayMember = "CierreID";
-            comboBox1.ValueMember = "CierreID";
-
 
         }
 
@@ -59,8 +55,20 @@ namespace PRESENTACION
 
         private void button2_Click(object sender, EventArgs e)
         {
-            int cierreID = Convert.ToInt32(comboBox1.SelectedValue);
-            MostrarCierre(cierreID);
+            try
+            {
+                int cierreID = Convert.ToInt32(textBox1.Text);
+                MostrarCierre(cierreID);
+            }
+            catch (Exception ex)
+            { 
+            MessageBox.Show("Ingrese un ID de cierre válido.");
+            }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 

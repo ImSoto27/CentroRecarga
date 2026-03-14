@@ -42,6 +42,7 @@ namespace PRESENTACION
 
 
 
+
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -56,6 +57,8 @@ namespace PRESENTACION
                 int vendedorID = Convert.ToInt32(comboBox1.SelectedValue);
                 int operadoraID = Convert.ToInt32(comboBox2.SelectedValue);
                 string fechacierre = dateTimePicker1.Value.ToString("yyyy-MM-dd");
+                Agregar(vendedorID, operadoraID, fechacierre);
+                MostrarCierre();
 
 
             }

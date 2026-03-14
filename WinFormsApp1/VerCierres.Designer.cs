@@ -28,22 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            comboBox1 = new ComboBox();
             label1 = new Label();
             dataGridView1 = new DataGridView();
             button1 = new Button();
             button2 = new Button();
+            textBox1 = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
-            // 
-            // comboBox1
-            // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(12, 36);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(151, 28);
-            comboBox1.TabIndex = 0;
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // label1
             // 
@@ -61,13 +52,13 @@
             dataGridView1.Location = new Point(12, 70);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(1201, 383);
+            dataGridView1.Size = new Size(952, 383);
             dataGridView1.TabIndex = 2;
             // 
             // button1
             // 
             button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            button1.Location = new Point(922, 483);
+            button1.Location = new Point(673, 483);
             button1.Name = "button1";
             button1.Size = new Size(94, 29);
             button1.TabIndex = 3;
@@ -86,16 +77,24 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(12, 36);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(125, 27);
+            textBox1.TabIndex = 5;
+            textBox1.TextChanged += textBox1_TextChanged;
+            // 
             // VerCierres
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1225, 524);
+            ClientSize = new Size(976, 524);
+            Controls.Add(textBox1);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(dataGridView1);
             Controls.Add(label1);
-            Controls.Add(comboBox1);
             Name = "VerCierres";
             Text = "VerCierres";
             Load += VerCierres_Load;
@@ -105,11 +104,10 @@
         }
 
         #endregion
-
-        private ComboBox comboBox1;
         private Label label1;
         private DataGridView dataGridView1;
         private Button button1;
         private Button button2;
+        private TextBox textBox1;
     }
 }

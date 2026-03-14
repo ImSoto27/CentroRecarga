@@ -107,6 +107,7 @@ namespace DATOS
         public string fechacierre { get; set; }
         public override DataTable Mostrar()
         {
+            DataTable tabla = new DataTable();
             comando.Connection = conexion.AbrirConexion();
             comando.CommandText = "SELECT c.CierreID, v.Nombre AS Vendedor, o.NombreOperadora AS Operadora, c.Total AS Total, FechaCierre AS Fecha FROM CierreCaja c INNER JOIN Vendedor v ON c.VendedorID = v.VendedorID INNER JOIN Operadora o ON c.OperadoraID = o.OperadoraID ORDER BY c.FechaCierre";
             SqlDataReader leer = comando.ExecuteReader();
@@ -120,7 +121,7 @@ namespace DATOS
         public void AgregarCierre(int vendedorID, int operadoraID, string fechacierre)
         {
             comando.Connection = conexion.AbrirConexion();
-            comando.CommandText = "INSERT INTO CierreCaja (VendedorID, OperadoraID, FechaCierre, Total) SELECT VendedorID, OperadoraID, FechaRecarga, SUM(Monto) FROM Recarga WHERE VendedorID = '"+vendedorID +"' GROUP BY VendedorID, OperadoraID, FechaRecarga";
+            comando.CommandText = "INSERT INTO CierreCaja (VendedorID, OperadoraID, FechaCierre, Total) SELECT VendedorID, OperadoraID, FechaRecarga, SUM(Monto) FROM Recarga  WHERE FechaRecarga = '"+fechacierre+"' AND VendedorID = '" + vendedorID+"' AND OperadoraID = '" + operadoraID+"' GROUP BY VendedorID, OperadoraID, FechaRecarga ORDER BY VendedorID, OperadoraID";
             comando.ExecuteNonQuery();
 
             conexion.CerrarConexion();
