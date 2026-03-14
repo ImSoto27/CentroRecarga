@@ -84,6 +84,7 @@
             Controls.Add(button1);
             Name = "Cierres";
             Text = "Cierres";
+            FormClosing += Cierres_FormClosing;
             ResumeLayout(false);
             PerformLayout();
         }

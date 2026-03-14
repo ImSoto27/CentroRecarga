@@ -61,14 +61,19 @@ namespace PRESENTACION
                 MostrarCierre(cierreID);
             }
             catch (Exception ex)
-            { 
-            MessageBox.Show("Ingrese un ID de cierre válido.");
+            {
+                MessageBox.Show("Ingrese un ID de cierre válido.");
             }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void VerCierres_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 

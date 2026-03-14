@@ -50,5 +50,10 @@ namespace PRESENTACION
             principal.Show();
             this.Close();
         }
+
+        private void Cierres_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

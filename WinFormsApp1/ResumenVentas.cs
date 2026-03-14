@@ -24,7 +24,7 @@ namespace PRESENTACION
         }
         public int vendedorID { get; set; }
         public int operadoraID { get; set; }
-        
+
         public string fechacierre { get; set; }
 
 
@@ -63,7 +63,7 @@ namespace PRESENTACION
 
             }
 
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 MessageBox.Show("Error: No puede haber dos cierres iguales un mismo dia");
             }
@@ -73,7 +73,7 @@ namespace PRESENTACION
         {
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = cierres.MostrarCierre();
-            
+
 
         }
         private void Agregar(int vendedorID, int operadoraID, string fechacierre)
@@ -98,6 +98,11 @@ namespace PRESENTACION
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
+        }
+
+        private void ResumenVentas_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

@@ -44,5 +44,10 @@ namespace PRESENTACION
         {
             principal.Show();
         }
+
+        private void RegistroOperadora_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

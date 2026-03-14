@@ -173,6 +173,7 @@
             Controls.Add(comboBox1);
             Name = "AgregarRecarga";
             Text = "AgregarRecarga";
+            FormClosing += AgregarRecarga_FormClosing;
             Load += AgregarRecarga_Load;
             ResumeLayout(false);
             PerformLayout();

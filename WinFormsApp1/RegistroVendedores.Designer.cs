@@ -48,6 +48,7 @@
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(12, 32);
             dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(776, 294);
             dataGridView1.TabIndex = 1;
@@ -72,6 +73,7 @@
             Controls.Add(label1);
             Name = "RegistroVendedores";
             Text = "RegistroVendedores";
+            FormClosing += RegistroVendedores_FormClosing;
             Load += RegistroVendedores_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);

@@ -74,6 +74,7 @@
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(12, 106);
             dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(776, 254);
             dataGridView1.TabIndex = 3;
@@ -152,6 +153,7 @@
             Controls.Add(label1);
             Name = "ResumenVentas";
             Text = "Cierre";
+            FormClosing += ResumenVentas_FormClosing;
             Load += Cierre_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);

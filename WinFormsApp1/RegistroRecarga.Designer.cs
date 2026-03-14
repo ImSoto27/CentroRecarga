@@ -39,6 +39,7 @@
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(12, 45);
             dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(776, 302);
             dataGridView1.TabIndex = 0;
@@ -72,6 +73,7 @@
             Controls.Add(dataGridView1);
             Name = "RegistroRecarga";
             Text = "Form1";
+            FormClosing += RegistroRecarga_FormClosing;
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);

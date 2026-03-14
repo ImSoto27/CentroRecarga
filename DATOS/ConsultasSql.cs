@@ -109,7 +109,7 @@ namespace DATOS
         {
             DataTable tabla = new DataTable();
             comando.Connection = conexion.AbrirConexion();
-            comando.CommandText = "SELECT c.CierreID, v.Nombre AS Vendedor, o.NombreOperadora AS Operadora, c.Total AS Total, FechaCierre AS Fecha FROM CierreCaja c INNER JOIN Vendedor v ON c.VendedorID = v.VendedorID INNER JOIN Operadora o ON c.OperadoraID = o.OperadoraID ORDER BY c.FechaCierre";
+            comando.CommandText = "SELECT c.CierreID, v.Nombre AS Vendedor, o.NombreOperadora AS Operadora, c.Total AS Total, FechaCierre AS Fecha FROM CierreCaja c INNER JOIN Vendedor v ON c.VendedorID = v.VendedorID INNER JOIN Operadora o ON c.OperadoraID = o.OperadoraID ORDER BY c.CierreID";
             SqlDataReader leer = comando.ExecuteReader();
             tabla.Load(leer);
 

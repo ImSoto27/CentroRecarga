@@ -31,6 +31,7 @@ namespace PRESENTACION
         {
             principal.Show();
         }
+
         private void label1_Click(object sender, EventArgs e)
         {
 
@@ -92,6 +93,11 @@ namespace PRESENTACION
         private void maskedTextBox1_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
         {
 
+        }
+
+        private void AgregarRecarga_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

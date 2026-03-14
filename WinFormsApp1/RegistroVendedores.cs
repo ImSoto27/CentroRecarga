@@ -43,5 +43,9 @@ namespace PRESENTACION
             principal.Show();
         }
 
+        private void RegistroVendedores_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

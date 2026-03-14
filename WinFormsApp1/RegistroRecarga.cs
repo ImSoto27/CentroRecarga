@@ -49,5 +49,10 @@ namespace PRESENTACION
         {
             principal.Show();
         }
+
+        private void RegistroRecarga_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
