@@ -21,9 +21,9 @@ namespace NEGOCIO
             return tabla;
         }
 
-        public void AgregarRecarga(int vendedorID, int operadoraID, decimal monto)
+        public void AgregarRecarga(int vendedorID, int operadoraID, string Numero, decimal monto)
         {
-            consulta.InsertarRecarga(vendedorID, operadoraID, Convert.ToDecimal(monto));
+            consulta.InsertarRecarga(vendedorID, operadoraID, Numero, Convert.ToDecimal(monto));
         }
     }
 
@@ -51,18 +51,37 @@ namespace NEGOCIO
 
     public class CN_Cierre
     {
+        public int vendedorID1 { get; set; }
+        public int operadoraID1 { get; set; }
+        public string fechacierre1 { get; set; }
+        public int cierreID1 { get; set; }
+
+
         public CD_ConsultaCierre consulta = new CD_ConsultaCierre();
-        public DataTable MostrarCierre
-            ()
+        public Cierres2 consulta2 = new Cierres2();
+
+        public DataTable MostrarCierre()
         {
             DataTable tabla = new DataTable();
             tabla = consulta.Mostrar();
             return tabla;
         }
 
-        public void AgregarCierres(int vendedorID)
+        public DataTable MostrarCierre2(int cierreID)
         {
-            consulta.AgregarCierre(vendedorID);
+            consulta2.cierreID = cierreID1;
+            DataTable tabla = new DataTable();
+            tabla = consulta2.DetallarCierre(cierreID);
+            return tabla;
         }
+
+        public void AgregarCierres(int vendedorID, int operadoraID, string fechacierre)
+        {
+            consulta.vendedorID = vendedorID1;
+            consulta.operadoraID = operadoraID1;
+            consulta.fechacierre = fechacierre1;
+            consulta.AgregarCierre(vendedorID, operadoraID, fechacierre);
+        }
+
     }
 }

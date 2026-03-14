@@ -1,30 +1,34 @@
-﻿using System;
+﻿using Microsoft.Data;
+using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Data.SqlClient;
-using Microsoft.Data;
-using System.Data;
 
 namespace DATOS
 {
-
-
-    public class CD_Recarga
+    public abstract class ConsultaBase
+    {
+        public ConexionSql conexion = new ConexionSql();
+        public abstract DataTable Mostrar();
+        
+    }
+    public class CD_Recarga : ConsultaBase
     {
 
-        private ConexionSql conexion = new ConexionSql();
         SqlDataReader leer;
         DataTable tabla = new DataTable();
         SqlCommand comando = new SqlCommand();
 
-        public DataTable Mostrar()
+        public override DataTable Mostrar()
         {
                     
 
             comando.Connection = conexion.AbrirConexion();
-            comando.CommandText = "SELECT r.RecargaID, v.Nombre AS Vendedor, o.NombreOperadora AS Operadora, r.Monto, r.FechaRecarga AS Fecha FROM Recarga r INNER JOIN Vendedor v ON r.VendedorID = v.VendedorID INNER JOIN Operadora o ON r.OperadoraID = o.OperadoraID ORDER BY r.RecargaID";
+            comando.CommandText = "SELECT r.RecargaID, v.Nombre AS Vendedor, o.NombreOperadora AS Operadora,r.Numero AS Numero, r.Monto, r.FechaRecarga AS Fecha FROM Recarga r INNER JOIN Vendedor v ON r.VendedorID = v.VendedorID INNER JOIN Operadora o ON r.OperadoraID = o.OperadoraID ORDER BY r.RecargaID";
             SqlDataReader leer = comando.ExecuteReader();
             tabla.Load(leer);
 
@@ -33,22 +37,21 @@ namespace DATOS
             return tabla;
         }
 
-        public void InsertarRecarga(int vendedorID, int operadoraID, decimal monto)
+        public void InsertarRecarga(int vendedorID, int operadoraID, string Numero, decimal monto)
         {
             comando.Connection = conexion.AbrirConexion();
-            comando.CommandText = "INSERT INTO Recarga(VendedorID, OperadoraID, Monto) VALUES ('" + vendedorID+"', '"+operadoraID+"', '"+monto+"')";
+            comando.CommandText = "INSERT INTO Recarga(VendedorID, OperadoraID, Numero, Monto) VALUES ('" + vendedorID+"', '"+operadoraID+"','"+Numero+"', '"+monto+"')";
             comando.ExecuteNonQuery();
 
         }
     }
-    public class CD_ConsultaOperadora
+    public class CD_ConsultaOperadora : ConsultaBase
     {
-        private ConexionSql conexion = new ConexionSql();
         SqlDataReader leer;
         DataTable tabla = new DataTable();
         SqlCommand comando = new SqlCommand();
 
-        public DataTable Mostrar()
+        public override DataTable Mostrar()
         {
             comando.Connection = conexion.AbrirConexion();
             comando.CommandText = "SELECT * FROM Operadora";
@@ -74,14 +77,13 @@ namespace DATOS
         }
     }
 
-    public class CD_ConsultaVendedor
+    public class CD_ConsultaVendedor : ConsultaBase
     {
-        private ConexionSql conexion = new ConexionSql();
         SqlDataReader leer;
         DataTable tabla = new DataTable();
         SqlCommand comando = new SqlCommand();
 
-        public DataTable Mostrar()
+        public override DataTable Mostrar()
         {
             comando.Connection = conexion.AbrirConexion();
             comando.CommandText = "SELECT * FROM Vendedor";
@@ -90,35 +92,23 @@ namespace DATOS
             conexion.CerrarConexion();
             return tabla;
         }
-
-        public DataTable MostrarOperadoras()
-        {
-            DataTable tabla = new DataTable();
-
-            {
-                comando.Connection = conexion.AbrirConexion();
-                comando.CommandText = "SELECT VendedorID, Nombre FROM Vendedor WHERE Activo = 1";
-                SqlDataReader leer = comando.ExecuteReader();
-                tabla.Load(leer);
-                conexion.CerrarConexion();
-                return tabla;
-
-            }
-        }
     }
 
-    public class CD_ConsultaCierre
+    public class CD_ConsultaCierre : ConsultaBase
     {
-        private ConexionSql conexion = new ConexionSql();
+ 
 
         SqlDataReader leer;
         DataTable tabla = new DataTable();
         SqlCommand comando = new SqlCommand();
 
-        public DataTable Mostrar()
+        public int vendedorID { get; set; }
+        public int operadoraID { get; set; }    
+        public string fechacierre { get; set; }
+        public override DataTable Mostrar()
         {
             comando.Connection = conexion.AbrirConexion();
-            comando.CommandText = "SELECT r.RecargaID, v.Nombre AS Vendedor, o.NombreOperadora AS Operadora, r.Monto FROM CierreCaja r INNER JOIN Vendedor v ON r.VendedorID = v.VendedorID INNER JOIN Operadora o ON r.OperadoraID = o.OperadoraID ORDER BY v.VendedorID";
+            comando.CommandText = "SELECT c.CierreID, v.Nombre AS Vendedor, o.NombreOperadora AS Operadora, c.Total AS Total, FechaCierre AS Fecha FROM CierreCaja c INNER JOIN Vendedor v ON c.VendedorID = v.VendedorID INNER JOIN Operadora o ON c.OperadoraID = o.OperadoraID ORDER BY c.FechaCierre";
             SqlDataReader leer = comando.ExecuteReader();
             tabla.Load(leer);
 
@@ -127,13 +117,47 @@ namespace DATOS
             return tabla;
         }
 
-        public void AgregarCierre(int vendedorID)
+        public void AgregarCierre(int vendedorID, int operadoraID, string fechacierre)
         {
             comando.Connection = conexion.AbrirConexion();
-            comando.CommandText = "INSERT INTO CierreCaja(VendedorID, OperadoraID, RecargaID, Monto) SELECT VendedorID, OperaoraID, RecargaID, Monto FROM Recarga WHERE VendedorID = '" + vendedorID + "' ";
+            comando.CommandText = "INSERT INTO CierreCaja (VendedorID, OperadoraID, FechaCierre, Total) SELECT VendedorID, OperadoraID, FechaRecarga, SUM(Monto) FROM Recarga WHERE VendedorID = '"+vendedorID +"' GROUP BY VendedorID, OperadoraID, FechaRecarga";
             comando.ExecuteNonQuery();
 
             conexion.CerrarConexion();
+        }
+
+    }
+
+    public class Cierres2 : ConsultaBase
+    {
+        SqlDataReader leer;
+        DataTable tabla = new DataTable();
+        SqlCommand comando = new SqlCommand();
+
+        public int cierreID { get; set; }
+
+        public DataTable DetallarCierre(int cierreID)
+        {
+            DataTable tabla = new DataTable();
+
+            comando.Connection = conexion.AbrirConexion();
+            comando.CommandText = "    SELECT * FROM DetalleCierre WHERE CierreID = '"+cierreID+"'";
+            SqlDataReader leer = comando.ExecuteReader();
+            tabla.Load(leer);
+            conexion.CerrarConexion();
+            return tabla;
+        }
+
+        public override DataTable Mostrar()
+        {
+            comando.Connection = conexion.AbrirConexion();
+            comando.CommandText = "SELECT  c.CierreID, v.Nombre AS Vendedor, o.NombreOperadora AS Operadora, r.RecargaID, r.Numero, r.Monto, r.FechaRecarga FROM CierreCaja c INNER JOIN Vendedor v ON c.VendedorID = v.VendedorID INNER JOIN Operadora o ON c.OperadoraID = o.OperadoraID INNER JOIN Recarga r ON r.VendedorID = c.VendedorID AND r.OperadoraID = c.OperadoraID AND r.FechaRecarga = c.FechaCierre WHERE c.CierreID = '"+cierreID+"' ORDER BY r.RecargaID";
+            SqlDataReader leer = comando.ExecuteReader();
+            tabla.Load(leer);
+
+            conexion.CerrarConexion();
+
+            return tabla;
         }
     }
 }
